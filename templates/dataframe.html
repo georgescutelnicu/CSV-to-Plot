@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DataFrame Display</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dataframe.css') }}">
+</head>
+<body>
+    <div class="container">
+        {{ df_html|safe }}
+    </div>
+
+    <div class="container">
+        <h2>Generate Chart</h2>
+        <form action="{{ url_for('generate_chart') }}" method="post">
+            <label for="chartType">Select Chart Type:</label>
+            <select id="chartType" name="chartType" onchange="showHideFields()">
+                <option value="bar" selected>Bar Chart</option>
+                <option value="hist">Histogram</option>
+                <option value="pie">Pie Chart</option>
+                 <option value="scatter">Scatter Plot</option>
+            </select>
+
+            <div id="barFields" style="display: block;">
+                <label for="xAxis">X-Axis:</label>
+                <select id="xAxis" name="xAxis">
+                    {% for column in columns %}
+                        {% if df[column].nunique() <= 150 %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                <label for="yAxis">Y-Axis:</label>
+                <select id="yAxis" name="yAxis">
+                    {% for column in columns %}
+                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' or df[column].nunique() <= 40 %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="histFields" style="display: none;">
+                <label for="axis">Axis:</label>
+                <select id="axis" name="axis">
+                    {% for column in columns %}
+                         {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' %}
+                            <option value="{{ column }}">{{ column }}</option>
+                         {% endif %}
+                    {% endfor %}
+                </select>
+
+                <label for="bins">Number of Bins:</label>
+                <select id="bins" name="bins">
+                    {% for i in range(10, 55, 5) %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="pieFields" style="display: none;">
+                <label for="pieColumn">Column:</label>
+                <select id="pieColumn" name="pieColumn">
+                    {% for column in columns %}
+                        <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="scatterFields" style="display: none;">
+                <label for="scatterX">X-Axis:</label>
+                <select id="scatterX" name="xAxis_scatter">
+                    {% for column in columns %}
+                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' or df[column].nunique() <= 50 %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                <label for="scatterY">Y-Axis:</label>
+                <select id="scatterY" name="yAxis_scatter">
+                    {% for column in columns %}
+                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' or df[column].nunique() <= 50 %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                <label for="scatterColor">Color (optional):</label>
+                <select id="scatterColor" name="scatterColor">
+                    <option value="None">None</option>
+                    {% for column in columns %}
+                        {% if df[column].nunique() <= 20 %}
+                                <option value="{{ column }}">{{ column }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Generate Plot</button>
+        </form>
+    </div>
+
+    <script>
+    function showHideFields() {
+        var chartType = document.getElementById("chartType").value;
+        var barFields = document.getElementById("barFields");
+        var histFields = document.getElementById("histFields");
+        var pieFields = document.getElementById("pieFields");
+        var scatterFields = document.getElementById("scatterFields");
+
+
+        if (chartType === "bar") {
+            barFields.style.display = "block";
+            histFields.style.display = "none";
+            pieFields.style.display = "none";
+            scatterFields.style.display = "none";
+        } else if (chartType === "hist") {
+            barFields.style.display = "none";
+            histFields.style.display = "block";
+            pieFields.style.display = "none";
+            scatterFields.style.display = "none";
+        } else if (chartType === "pie") {
+            barFields.style.display = "none";
+            histFields.style.display = "none";
+            pieFields.style.display = "block";
+            scatterFields.style.display = "none";
+        } else if (chartType === "scatter") {
+            barFields.style.display = "none";
+            histFields.style.display = "none";
+            pieFields.style.display = "none";
+            scatterFields.style.display = "block";
+        }
+    }
+</script>
+</body>
+</html>
