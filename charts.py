@@ -91,3 +91,26 @@ def generate_scatter_plot(df, x_column, y_column, color_column):
     plot_url = base64.b64encode(img.getvalue()).decode()
 
     return plot_url
+
+
+def generate_line_chart(df, x_column, y_column):
+    plt.figure(figsize=(18, 10))
+
+    df = df.sort_values(by=[x_column])
+
+    # Calculate the rolling mean to smooth out the line
+    df['rolling_mean'] = df[y_column].rolling(window=10).mean()
+
+    plt.plot(df[x_column], df['rolling_mean'], linestyle='-', color='b')
+    plt.title('Line Chart with Rolling Mean')
+    plt.xlabel(x_column)
+    plt.ylabel(f'{y_column} (with Rolling Mean)')
+    plt.xticks(rotation=60, ha='right', fontsize=8)
+
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+
+    plot_url = base64.b64encode(img.getvalue()).decode()
+
+    return plot_url
