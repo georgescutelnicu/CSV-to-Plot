@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chart.css') }}">
     <title>Generated Chart</title>
 </head>
 <body>
     <img src="data:image/png;base64,{{ plot_url }}" alt="Generated Chart">
+
+    <div>
+    <a href="data:image/png;base64,{{ plot_url }}" download="chart.png">
+        <button>Download Chart</button>
+    </a>
+    <a href="/">
+        <button>Home</button>
+    </a>
+    </div>
 </body>
 </html>

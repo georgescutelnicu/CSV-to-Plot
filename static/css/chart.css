@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+}
+
+div {
+    margin-top: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    display: inline-block;
+    padding: 13px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+    margin: 20px 0;
+}
+
+button:hover {
+    background-color: #45a049;
+}
