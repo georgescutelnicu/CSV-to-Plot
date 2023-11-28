@@ -13,7 +13,7 @@ body {
  .container {
     width: 66%;
     max-height: 700px;
-    margin: 3% auto;
+    margin: 1% auto;
     overflow: auto;
     font-size: 12px;
     background-color: #fff;
@@ -44,4 +44,31 @@ tr:first-of-type {
      color: white;
      background-color: #72c475;
      font-weight: bold;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fff;
+    padding: 15px;
+    justify-content: center;
+    text-align: center;
+}
+
+form label, form select, form button {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 8px;
+}
+
+form button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
 }
