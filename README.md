@@ -2,6 +2,8 @@
 
 Convert CSV data into visual charts with this web application built using Python(Flask), JS, HTML and CSS.
 
+<img src='static/img/stats.png'>
+
 ## Introduction
 CSV to Chart Generator is a web application developed using Flask, a Python web framework, to facilitate the process of visualizing data from CSV files. The application allows users to upload CSV files, preprocess the data, and generate various types of charts.
 
