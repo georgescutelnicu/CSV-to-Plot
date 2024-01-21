@@ -1,12 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, request
 import pandas as pd
 import os
-from charts import generate_bar_chart, generate_hist_plot, generate_pie_chart, generate_scatter_plot, generate_line_chart
-from  helper_functions import preprocess_data
+from charts import (generate_bar_chart, generate_hist_plot, generate_pie_chart, generate_scatter_plot,
+                    generate_line_chart)
+from helper_functions import preprocess_data
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+
+df = pd.DataFrame()
 
 
 @app.route('/')

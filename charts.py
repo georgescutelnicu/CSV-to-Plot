@@ -7,6 +7,17 @@ matplotlib.use('agg')
 
 
 def generate_bar_chart(df, x_column, y_column):
+    """
+        Generate a bar chart from the given DataFrame.
+
+        Parameters:
+            df (pd.DataFrame): The DataFrame containing the data.
+            x_column (str): The column to be used for the x-axis.
+            y_column (str): The column to be used for the y-axis.
+
+        Returns:
+            str: Base64-encoded image URL of the generated bar chart.
+    """
     plt.figure(figsize=(18, 10))
     df[x_column] = df[x_column].astype(str)
 
@@ -26,6 +37,17 @@ def generate_bar_chart(df, x_column, y_column):
 
 
 def generate_hist_plot(df, axis_column, bins):
+    """
+        Generate a histogram from the given DataFrame.
+
+        Parameters:
+            df (pd.DataFrame): The DataFrame containing the data.
+            axis_column (str): The column to be used for the histogram.
+            bins (int): The number of bins for the histogram.
+
+        Returns:
+            str: Base64-encoded image URL of the generated histogram.
+    """
     plt.figure(figsize=(18, 8))
 
     plt.hist(df[axis_column], bins=bins, edgecolor='black')
@@ -44,12 +66,23 @@ def generate_hist_plot(df, axis_column, bins):
 
 
 def generate_pie_chart(df, column):
+    """
+        Generate a pie chart from the given DataFrame.
+
+        Parameters:
+            df (pd.DataFrame): The DataFrame containing the data.
+            column (str): The column to be used for the pie chart.
+
+        Returns:
+            str: Base64-encoded image URL of the generated pie chart.
+    """
     plt.figure(figsize=(10, 10))
 
     counts = df[column].value_counts()
-    wedges, texts, autotexts = plt.pie(counts, labels=None, autopct='', textprops=dict(color="w"),  pctdistance = 2)
+    wedges, texts, autotexts = plt.pie(counts, labels=None, autopct='', textprops=dict(color="w"),  pctdistance=2)
 
-    legend_labels = [f'{index}: {count} {autotext.get_text()}' for index, count, autotext in zip(counts.index, counts, autotexts)]
+    legend_labels = [f'{index}: {count} {autotext.get_text()}' for index, count, autotext in zip(counts.index, counts,
+                                                                                                 autotexts)]
     plt.legend(legend_labels, title=column, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
 
     plt.title(f'Pie Chart - {column}')
@@ -64,7 +97,20 @@ def generate_pie_chart(df, column):
 
 
 def generate_scatter_plot(df, x_column, y_column, color_column):
+    """
+        Generate a scatter plot from the given DataFrame.
+
+        Parameters:
+            df (pd.DataFrame): The DataFrame containing the data.
+            x_column (str): The column to be used for the x-axis.
+            y_column (str): The column to be used for the y-axis.
+            color_column (str, optional): The column to be used for color-coding points (optional).
+
+        Returns:
+            str: Base64-encoded image URL of the generated scatter plot.
+    """
     plt.figure(figsize=(10, 8))
+    legend = None
 
     if color_column is not None:
         color_mapping = {value: code for code, value in enumerate(df[color_column].unique())}
@@ -94,6 +140,17 @@ def generate_scatter_plot(df, x_column, y_column, color_column):
 
 
 def generate_line_chart(df, x_column, y_column):
+    """
+        Generate a line chart with rolling mean from the given DataFrame.
+
+        Parameters:
+            df (pd.DataFrame): The DataFrame containing the data.
+            x_column (str): The column to be used for the x-axis.
+            y_column (str): The column to be used for the y-axis.
+
+        Returns:
+            str: Base64-encoded image URL of the generated line chart.
+    """
     plt.figure(figsize=(18, 10))
 
     df = df.sort_values(by=[x_column])
