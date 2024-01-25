@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 import pandas as pd
 import os
 from charts import (generate_bar_chart, generate_hist_plot, generate_pie_chart, generate_scatter_plot,
-                    generate_line_chart)
+                    generate_line_chart, generate_hexbin)
 from helper_functions import preprocess_data
 
 
@@ -89,6 +89,10 @@ def generate_chart():
             if c == "None":
                 c = None
             plot_url = generate_scatter_plot(df, x_axis, y_axis, c)
+        elif chart_type == 'hexbin':
+            x_axis = request.form['xAxis']
+            y_axis = request.form['yAxis']
+            plot_url = generate_hexbin(df, x_axis, y_axis)
         else:
             return redirect(url_for("home"))
 

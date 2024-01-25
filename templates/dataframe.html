@@ -19,6 +19,7 @@
                 <option value="line">Line Chart</option>
                 <option value="pie">Pie Chart</option>
                 <option value="scatter">Scatter Plot</option>
+                <option value="hexbin">HexBin Plot</option>
             </select>
 
             <div id="barFields" style="display: block;">
@@ -34,7 +35,7 @@
                 <select id="yAxis" name="yAxis">
                     <option value="" disabled selected>Select Y-Axis</option>
                     {% for column in columns %}
-                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' or df[column].nunique() <= 40 %}
+                        {% if df[column].dtype == 'int64' or df[column].dtype == 'float64' or df[column].nunique() <= 40 %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endif %}
                     {% endfor %}
@@ -45,7 +46,7 @@
                 <select id="axis" name="axis">
                     <option value="" disabled selected>Select Axis</option>
                     {% for column in columns %}
-                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' %}
+                        {% if df[column].dtype == 'int64' or df[column].dtype == 'float64' %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endif %}
                     {% endfor %}
@@ -72,7 +73,7 @@
                 <select id="lineY" name="yAxis">
                     <option value="" disabled selected>Select Y-Axis</option>
                     {% for column in columns %}
-                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' %}
+                        {% if df[column].dtype == 'int64' or df[column].dtype == 'float64' %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endif %}
                     {% endfor %}
@@ -92,7 +93,7 @@
                 <select id="scatterX" name="xAxis">
                     <option value="" disabled selected>Select X-Axis</option>
                     {% for column in columns %}
-                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' or df[column].nunique() <= 50 %}
+                        {% if df[column].dtype == 'int64' or df[column].dtype == 'float64' or df[column].nunique() <= 50 %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endif %}
                     {% endfor %}
@@ -101,7 +102,7 @@
                 <select id="scatterY" name="yAxis">
                     <option value="" disabled selected>Select Y-Axis</option>
                     {% for column in columns %}
-                        {% if df[column].dtype == 'int4' or df[column].dtype == 'float64' or df[column].nunique() <= 50 %}
+                        {% if df[column].dtype == 'int64' or df[column].dtype == 'float64' or df[column].nunique() <= 50 %}
                             <option value="{{ column }}">{{ column }}</option>
                         {% endif %}
                     {% endfor %}
@@ -112,6 +113,26 @@
                     {% for column in columns %}
                         {% if df[column].nunique() <= 20 %}
                                 <option value="{{ column }}">{{ column }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="hexFields" style="display: none;">
+                <select id="hexX" name="xAxis">
+                    <option value="" disabled selected>Select X-Axis</option>
+                    {% for column in columns %}
+                        {% if df[column].dtype == 'int64' or df[column].dtype == 'float64' %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                <select id="hexY" name="yAxis">
+                    <option value="" disabled selected>Select Y-Axis</option>
+                    {% for column in columns %}
+                        {% if df[column].dtype == 'int64' or df[column].dtype == 'float64' %}
+                            <option value="{{ column }}">{{ column }}</option>
                         {% endif %}
                     {% endfor %}
                 </select>
@@ -129,6 +150,7 @@
         var pieFields = document.getElementById("pieFields");
         var scatterFields = document.getElementById("scatterFields");
         var lineFields = document.getElementById("lineFields");
+        var hexFields = document.getElementById("hexFields");
 
 
         if (chartType === "bar") {
@@ -137,30 +159,42 @@
             pieFields.style.display = "none";
             scatterFields.style.display = "none";
             lineFields.style.display = "none";
+            hexFields.style.display = "none";
         } else if (chartType === "hist") {
             barFields.style.display = "none";
             histFields.style.display = "block";
             pieFields.style.display = "none";
             scatterFields.style.display = "none";
             lineFields.style.display = "none";
+            hexFields.style.display = "none";
         } else if (chartType === "pie") {
             barFields.style.display = "none";
             histFields.style.display = "none";
             pieFields.style.display = "block";
             scatterFields.style.display = "none";
             lineFields.style.display = "none";
+            hexFields.style.display = "none";
         } else if (chartType === "scatter") {
             barFields.style.display = "none";
             histFields.style.display = "none";
             pieFields.style.display = "none";
             scatterFields.style.display = "block";
             lineFields.style.display = "none";
+            hexFields.style.display = "none";
         } else if (chartType === "line") {
             barFields.style.display = "none";
             histFields.style.display = "none";
             pieFields.style.display = "none";
             scatterFields.style.display = "none";
             lineFields.style.display = "block";
+            hexFields.style.display = "none";
+        } else if (chartType === "hexbin") {
+            barFields.style.display = "none";
+            histFields.style.display = "none";
+            pieFields.style.display = "none";
+            scatterFields.style.display = "none";
+            lineFields.style.display = "none";
+            hexFields.style.display = "block";
         }
     }
 
@@ -177,8 +211,9 @@
             return validateSelect("scatterX") && validateSelect("scatterY");
         } else if (chartType === "line") {
             return validateSelect("lineX") && validateSelect("lineY");
+        } else if (chartType === "hexbin") {
+            return validateSelect("hexX") && validateSelect("hexY");
         }
-
         return false;
     }
 

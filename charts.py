@@ -171,3 +171,33 @@ def generate_line_chart(df, x_column, y_column):
     plot_url = base64.b64encode(img.getvalue()).decode()
 
     return plot_url
+
+
+def generate_hexbin(df, x_column, y_column):
+    """
+       Generate a hexbin plot from the given DataFrame.
+
+       Parameters:
+           df (pd.DataFrame): The DataFrame containing the data.
+           x_column (str): The column to be used for the x-axis.
+           y_column (str): The column to be used for the y-axis.
+
+       Returns:
+           str: Base64-encoded image URL of the generated hexbin plot.
+    """
+    plt.figure(figsize=(12, 8))
+
+    plt.hexbin(df[x_column], df[y_column], gridsize=20, cmap='Blues')
+    plt.colorbar(label='Count')
+    plt.title('Hexbin Plot')
+    plt.xlabel(x_column)
+    plt.ylabel(y_column)
+    plt.xticks(rotation=60, ha='right', fontsize=8)
+
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+
+    plot_url = base64.b64encode(img.getvalue()).decode()
+
+    return plot_url
