@@ -21,7 +21,9 @@ CSV to Chart Generator is a web application developed using Flask, a Python web 
 
 ## Demo
 Check out the live demo [here](https://csv-to-plot.onrender.com/)
-
+<br><br>
+**<ins>QUICK NOTE:</ins><br>It may take up to one minute for the demo to start.**
+<br><br>
 *Hosted by [Render](https://render.com/)*
 
 ## Charts
@@ -31,6 +33,7 @@ Explore different chart types:
 - Line Charts
 - Pie Charts
 - Scatter Plots
+- Hexbin Plots
 
 ## Contributing
 Contributions are welcome! If you have suggestions for improvements or new features, please create an issue or submit a pull request.
