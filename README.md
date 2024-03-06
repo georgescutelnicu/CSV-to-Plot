@@ -10,7 +10,7 @@ CSV to Chart Generator is a web application developed using Flask, a Python web 
 ## Features
 - **CSV Upload:** Upload CSV files containing data for charting.
 - **Data Preprocessing:** Automatically preprocess data, including handling missing values and converting date columns to the datetime format.
-- **Chart Generation:** Create different types of charts, including Bar Charts, Histograms, Line Charts, Pie Charts, and Scatter Plots.
+- **Chart Generation:** Create different types of charts, including Bar Charts, Histograms, Line Charts, Pie Charts, Hexbin charts and Scatter Plots.
 - **Visualization:** Analyze datasets visually for better insights.
 - **Export:** Export and share visualized data.
 
